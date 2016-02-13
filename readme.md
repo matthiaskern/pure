@@ -1,9 +1,11 @@
-# Pure
-
-> Pretty, minimal and fast ZSH prompt
+# Fork
+This fork includes additional info on package.json version in the current directory and which node version is in use via nvm.
 
 <img src="screenshot.png" width="550">
 
+# Pure
+
+> Pretty, minimal and fast ZSH prompt
 
 ## Overview
 
