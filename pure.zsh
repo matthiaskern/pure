@@ -306,6 +306,21 @@ prompt_pure_async_callback() {
 	esac
 }
 
+# from https://github.com/stevelacy/cordial-zsh-theme
+get_npm_package_version() {
+  local JSON=''
+  if [[ -f 'package.json' ]]; then
+    echo $(node -e "var pkg; try {pkg = require('./package.json').version; } catch(e){ console.log('(npm:ERROR: invalid JSON package.json)')}; if (pkg) console.log('('+pkg+')')")
+  fi
+}
+
+nvm_prompt_info() {
+  nvm_info=$(nvm current 2> /dev/null)
+  if [[ -n $nvm_info && $nvm_info != "system" ]]; then
+    echo "⬡ $nvm_info"
+  fi
+}
+
 prompt_pure_setup() {
 	# prevent percentage showing up
 	# if output doesn't end with a newline
@@ -344,8 +359,12 @@ prompt_pure_setup() {
 	# show username@host if root, with username in white
 	[[ $UID -eq 0 ]] && prompt_pure_username=' %F{white}%n%f%F{242}@%m%f'
 
+	setopt PROMPT_SUBST
+	# If the PROMPT_SUBST option is set, the prompt string is first subjected to parameter expansion, command substitution and arithmetic expansion.
 	# prompt turns red if the previous command didn't exit with 0
-	PROMPT="%(?.%F{green}.%F{red})${PURE_PROMPT_SYMBOL:-⚡}%f "
+	PROMPT="%(?.%F{yellow}.%F{red})${PURE_PROMPT_SYMBOL:-⚡}%f "
+	# right hand side
+	RPROMPT='%F{magenta}$(nvm_prompt_info) %F{green}$(get_npm_package_version)'
 }
 
 prompt_pure_setup "$@"
