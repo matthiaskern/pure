@@ -317,7 +317,7 @@ get_npm_package_version() {
 nvm_prompt_info() {
   nvm_info=$(nvm current 2> /dev/null)
   if [[ -n $nvm_info && $nvm_info != "system" ]]; then
-    echo "⬡ $nvm_info"
+    echo "$nvm_info"
   fi
 }
 
